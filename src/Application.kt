@@ -28,7 +28,7 @@ import java.util.*
 
 /***
  使用ktor下载markdown格式的语雀文档,并且替换图片地址.使用base64码显示图片,解决防盗链的问题
- 使用方法:克隆项目,修改saveFile,xAuthToken和repo,运行main方法,访问http://localhost:8080/,本来是想访问链接就可以全自动更新博客,有空再研究一下
+ 使用方法:克隆项目,修改saveFile,xAuthToken和repo,运行main方法,访问http://localhost:8080/
  *
  */
 
@@ -123,7 +123,7 @@ fun Application.module(testing: Boolean = false) {
                         currentFile = currentFile + "\\00." + item.title.replace(" ", "") + ".md"
                         File(currentFile).createNewFile()
                     }
-                    //获取具体doc内容
+                    //获取具体doc的草稿内容,不需要发布即可获得文档内容
                     val docDetail =
                         client.get<DocDetail>("https://www.yuque.com/api/v2/repos/${repo}/docs/${item.doc_id}?raw=0") {
                             //个人Token
