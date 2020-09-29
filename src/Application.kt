@@ -1,6 +1,7 @@
 package com.khassar
 
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.khassar.MyUtils.filenameFilter
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install
@@ -95,14 +96,11 @@ fun Application.module(testing: Boolean = false) {
                     if (File(currentFile).listFiles() != null) {
                         //文件夹命名规则为00.xxx
                         currentFile =
-                            currentFile + "\\" + MyUtils.getFileSerialNumberString(File(currentFile).listFiles().size) + item.title.replace(
-                                " ",
-                                ""
-                            )
+                            currentFile + "\\" + MyUtils.getFileSerialNumberString(File(currentFile).listFiles().size) + filenameFilter(item.title)
                         File(currentFile).mkdir()
                     } else {
                         //创建第一个文件夹
-                        currentFile = currentFile + "\\" + "00." + item.title.replace(" ", "")
+                        currentFile = currentFile + "\\" + "00." + filenameFilter(item.title)
                         File(currentFile).mkdir()
                     }
 
@@ -112,15 +110,12 @@ fun Application.module(testing: Boolean = false) {
                     if (File(currentFile).listFiles() != null) {
                         //文件命名规则为00.xxx.md
                         currentFile =
-                            currentFile + "\\" + MyUtils.getFileSerialNumberString(File(currentFile).listFiles().size) + item.title.replace(
-                                " ",
-                                ""
-                            ) + ".md"
+                            currentFile + "\\" + MyUtils.getFileSerialNumberString(File(currentFile).listFiles().size) + filenameFilter(item.title) + ".md"
                         File(currentFile).createNewFile()
 
                     } else {
                         //创建第一个文件
-                        currentFile = currentFile + "\\00." + item.title.replace(" ", "") + ".md"
+                        currentFile = currentFile + "\\00." + filenameFilter(item.title) + ".md"
                         File(currentFile).createNewFile()
                     }
                     //获取具体doc的草稿内容,不需要发布即可获得文档内容
